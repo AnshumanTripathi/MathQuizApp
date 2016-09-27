@@ -1,9 +1,10 @@
 package com.anshumantripathi.mathquizapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -15,6 +16,25 @@ import java.util.Random;
 public class QuizActivity extends AppCompatActivity {
 
     boolean doubleBackPressToExit = false;
+    public static String MyPreferences = "MyPrefs";
+    SharedPreferences sharedPreferences;
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sharedPreferences = getSharedPreferences(MyPreferences, 0);
+        //Check if shared preferences are present, if present, get their values
+
+        if (sharedPreferences.contains("points")) {
+//            Toast.makeText(this, "Points from Shared preferences: " + sharedPreferences.getInt("points", 0), Toast.LENGTH_SHORT).show();
+            QuizContext.getInstance().setPoints(sharedPreferences.getInt("points", 0));
+        } if (sharedPreferences.contains("noOfQuestions")) {
+//            Toast.makeText(this, "Questions from Shared preferences: " + sharedPreferences.getInt("noOfQuestions", 0), Toast.LENGTH_SHORT).show();
+            QuizContext.getInstance().setNumberOfQuestions(sharedPreferences.getInt("noOfQuestions", 0));
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +49,7 @@ public class QuizActivity extends AppCompatActivity {
 
         final String operation = QuizContext.getInstance().getOperation();
         Random randomNumberGenerator = new Random();
+
 
         //Generate Random Numbers
         int num1 = randomNumberGenerator.nextInt((9) + 1) + 1;
@@ -90,6 +111,7 @@ public class QuizActivity extends AppCompatActivity {
                     QuizContext.getInstance().setPoints(++points);
                     Toast.makeText(getBaseContext(), "Correct Answer", Toast.LENGTH_SHORT).show();
                     QuizContext.getInstance().setNumberOfQuestions(QuizContext.getInstance().getNumberOfQuestions() - 1);
+
                     if (QuizContext.getInstance().getNumberOfQuestions() > 0) {
                         //Still Questions left, Reload this activity
                         finish();
@@ -133,6 +155,15 @@ public class QuizActivity extends AppCompatActivity {
                 doubleBackPressToExit = false;
             }
         }, 2000);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Set Shared preferences if app is paused or closed
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("points", QuizContext.getInstance().getPoints());
+        editor.putInt("noOfQuestions", QuizContext.getInstance().getNumberOfQuestions());
+        editor.commit();
     }
 }

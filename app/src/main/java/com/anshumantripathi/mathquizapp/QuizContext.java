@@ -10,12 +10,13 @@ import java.util.Random;
 
 public class QuizContext {
 
+    private static QuizContext instance = null;
+
     private static int answer;
     private static int num1;
     private static int num2;
     private static int points;
-    private static QuizContext instance = null;
-    private static int numberOfQuestions = 3;
+    private static int numberOfQuestions = 10;
     private String[] operations = {"add", "sub", "mul"};
 
     private QuizContext() {
@@ -53,6 +54,7 @@ public class QuizContext {
     }
 
     String getOperation() {
+        // Get Random Operation
         int index = new Random().nextInt(operations.length);
         return operations[index];
     }
@@ -76,6 +78,6 @@ public class QuizContext {
     //Reset QuizContext
     void resetContext(){
         QuizContext.getInstance().setPoints(0);
-        QuizContext.getInstance().setNumberOfQuestions(3);
+        QuizContext.getInstance().setNumberOfQuestions(10);
     }
 }
