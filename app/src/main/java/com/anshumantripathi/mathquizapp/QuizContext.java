@@ -16,7 +16,6 @@ public class QuizContext {
     private static int points;
     private static QuizContext instance = null;
     private static int numberOfQuestions = 3;
-
     private String[] operations = {"add", "sub", "mul"};
 
     private QuizContext() {
@@ -72,5 +71,11 @@ public class QuizContext {
 
     void setNum2(int randomNum2) {
         num2 = randomNum2;
+    }
+
+    //Reset QuizContext
+    void resetContext(){
+        QuizContext.getInstance().setPoints(0);
+        QuizContext.getInstance().setNumberOfQuestions(3);
     }
 }

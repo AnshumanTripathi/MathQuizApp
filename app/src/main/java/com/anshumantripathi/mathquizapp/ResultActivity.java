@@ -24,7 +24,7 @@ public class ResultActivity extends AppCompatActivity {
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetContext();
+                QuizContext.getInstance().resetContext();
                 //Start Quiz Again
                 Intent intent = new Intent(ResultActivity.this,QuizActivity.class);
                 startActivity(intent);
@@ -33,18 +33,12 @@ public class ResultActivity extends AppCompatActivity {
         goHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetContext();
+                QuizContext.getInstance().resetContext();
                 //Start Quiz Again
                 Intent intent = new Intent(ResultActivity.this,LauncherActivity.class);
                 startActivity(intent);
             }
         });
 
-    }
-
-    //Reset QuizContext
-    void resetContext(){
-        QuizContext.getInstance().setPoints(0);
-        QuizContext.getInstance().setNumberOfQuestions(3);
     }
 }

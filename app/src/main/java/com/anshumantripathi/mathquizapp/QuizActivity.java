@@ -1,6 +1,7 @@
 package com.anshumantripathi.mathquizapp;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
+
+    boolean doubleBackPressToExit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +33,21 @@ public class QuizActivity extends AppCompatActivity {
         //Generate Random Numbers
         int num1 = randomNumberGenerator.nextInt((9) + 1) + 1;
         QuizContext.getInstance().setNum1(num1);
-        if(operation.equals("sub")) {
-            int num2 = randomNumberGenerator.nextInt((num1-1) + 1) + 1;
+        if (operation.equals("sub")) {
+            int num2 = randomNumberGenerator.nextInt((num1 - 1) + 1) + 1;
             QuizContext.getInstance().setNum2(num2);
-        }else{
+        } else {
             int num2 = randomNumberGenerator.nextInt((9) + 1) + 1;
             QuizContext.getInstance().setNum2(num2);
         }
 
-        if(operation.equals("add")) {
+        if (operation.equals("add")) {
             questionsText.setText(QuizContext.getInstance().getNum1() + " + " + QuizContext.getInstance().getNum2());
             answerBar.setMax(30);
-        }
-        else if(operation.equals("mul")) {
+        } else if (operation.equals("mul")) {
             questionsText.setText(QuizContext.getInstance().getNum1() + " X  " + QuizContext.getInstance().getNum2());
             answerBar.setMax(100);
-        }
-        else if(operation.equals("sub")) {
+        } else if (operation.equals("sub")) {
             questionsText.setText(QuizContext.getInstance().getNum1() + " - " + QuizContext.getInstance().getNum2());
             answerBar.setMax(30);
         }
@@ -77,11 +78,11 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int solution = 0;
 
-                if(operation.equals("add"))
+                if (operation.equals("add"))
                     solution = QuizContext.getInstance().getNum1() + QuizContext.getInstance().getNum2();
-                else if(operation.equals("mul"))
+                else if (operation.equals("mul"))
                     solution = QuizContext.getInstance().getNum1() * QuizContext.getInstance().getNum2();
-                else if(operation.equals("sub"))
+                else if (operation.equals("sub"))
                     solution = QuizContext.getInstance().getNum1() - QuizContext.getInstance().getNum2();
 
                 if (solution == QuizContext.getInstance().getAnswer()) {
@@ -89,29 +90,49 @@ public class QuizActivity extends AppCompatActivity {
                     QuizContext.getInstance().setPoints(++points);
                     Toast.makeText(getBaseContext(), "Correct Answer", Toast.LENGTH_SHORT).show();
                     QuizContext.getInstance().setNumberOfQuestions(QuizContext.getInstance().getNumberOfQuestions() - 1);
-                    if(QuizContext.getInstance().getNumberOfQuestions() > 0 ) {
+                    if (QuizContext.getInstance().getNumberOfQuestions() > 0) {
                         //Still Questions left, Reload this activity
                         finish();
                         startActivity(getIntent());
-                    }else{
+                    } else {
                         //Al questions finished, Go to Result Activity
-                        Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
+                        Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
                         startActivity(intent);
                     }
-                }else{
+                } else {
                     Toast.makeText(getBaseContext(), "Wrong Answer", Toast.LENGTH_SHORT).show();
                     QuizContext.getInstance().setNumberOfQuestions(QuizContext.getInstance().getNumberOfQuestions() - 1);
-                    if(QuizContext.getInstance().getNumberOfQuestions() > 0 ) {
+                    if (QuizContext.getInstance().getNumberOfQuestions() > 0) {
                         //Still Questions left, Reload this activity
                         finish();
                         startActivity(getIntent());
-                    }else{
+                    } else {
                         //Al questions finished, Go to Result Activity
-                        Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
+                        Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
                         startActivity(intent);
                     }
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackPressToExit) {
+            QuizContext.getInstance().resetContext();
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackPressToExit = true;
+        Toast.makeText(this, "Press BACK agin to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackPressToExit = false;
+            }
+        }, 2000);
+
     }
 }
