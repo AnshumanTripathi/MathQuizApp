@@ -18,7 +18,6 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-
         //Layout Elements
         TextView questionsText = (TextView) findViewById(R.id.questions);
         final TextView answerText = (TextView) findViewById(R.id.answer);
@@ -32,7 +31,7 @@ public class QuizActivity extends AppCompatActivity {
         int num1 = randomNumberGenerator.nextInt((9) + 1) + 1;
         QuizContext.getInstance().setNum1(num1);
         if(operation.equals("sub")) {
-            int num2 = randomNumberGenerator.nextInt((num1) + 1) + 1;
+            int num2 = randomNumberGenerator.nextInt((num1-1) + 1) + 1;
             QuizContext.getInstance().setNum2(num2);
         }else{
             int num2 = randomNumberGenerator.nextInt((9) + 1) + 1;
@@ -76,7 +75,6 @@ public class QuizActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Button Clicked!", Toast.LENGTH_SHORT).show();
                 int solution = 0;
 
                 if(operation.equals("add"))

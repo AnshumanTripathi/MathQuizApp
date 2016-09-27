@@ -22,15 +22,6 @@
         android:id="@+id/questions"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="65dp"
-        android:id="@+id/answer"/>
-
     <SeekBar
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
@@ -50,4 +41,24 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="82dp"
         android:id="@+id/submit" />
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:id="@+id/answer"
+        android:layout_below="@+id/questions"
+        android:layout_alignLeft="@+id/questions"
+        android:layout_alignStart="@+id/questions" />
+
+    <TextView
+        android:text="@string/yourAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/seekBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView4"
+        android:layout_alignTop="@+id/answer" />
 </RelativeLayout>
