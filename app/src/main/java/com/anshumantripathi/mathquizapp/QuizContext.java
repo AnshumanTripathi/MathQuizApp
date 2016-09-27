@@ -13,7 +13,7 @@ public class QuizContext {
     private static int num2;
     private static int points;
     private static QuizContext instance = null;
-    private static int numberOfQuestions = 3;
+    private static int numberOfQuestions = 10;
 
     String[] operations = {"add","sub","mul"};
 
