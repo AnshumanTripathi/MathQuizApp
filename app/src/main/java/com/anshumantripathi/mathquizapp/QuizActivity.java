@@ -18,15 +18,17 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        final String operation = QuizContext.getInstance().getOperation();
 
+        //Layout Elements
         TextView questionsText = (TextView) findViewById(R.id.questions);
         final TextView answerText = (TextView) findViewById(R.id.answer);
+        final SeekBar answerBar = (SeekBar) findViewById(R.id.seekBar);
+        Button submitButton = (Button) findViewById(R.id.submit);
 
-        final SeekBar answerbar = (SeekBar) findViewById(R.id.seekBar);
-
+        final String operation = QuizContext.getInstance().getOperation();
         Random randomNumberGenerator = new Random();
 
+        //Generate Random Numbers
         int num1 = randomNumberGenerator.nextInt((9) + 1) + 1;
         QuizContext.getInstance().setNum1(num1);
         if(operation.equals("sub")) {
@@ -39,20 +41,21 @@ public class QuizActivity extends AppCompatActivity {
 
         if(operation.equals("add")) {
             questionsText.setText(QuizContext.getInstance().getNum1() + " + " + QuizContext.getInstance().getNum2());
-            answerbar.setMax(30);
+            answerBar.setMax(30);
         }
         else if(operation.equals("mul")) {
             questionsText.setText(QuizContext.getInstance().getNum1() + " X  " + QuizContext.getInstance().getNum2());
-            answerbar.setMax(100);
+            answerBar.setMax(100);
         }
         else if(operation.equals("sub")) {
             questionsText.setText(QuizContext.getInstance().getNum1() + " - " + QuizContext.getInstance().getNum2());
-            answerbar.setMax(30);
+            answerBar.setMax(30);
         }
 
-        answerbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        answerBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //Change text view according to SeekBar
                 answerText.setText(String.valueOf(progress));
                 QuizContext.getInstance().setAnswer(progress);
             }
@@ -64,11 +67,12 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                //Get the final value
                 QuizContext.getInstance().setAnswer(seekBar.getProgress());
             }
         });
 
-        Button submitButton = (Button) findViewById(R.id.submit);
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,23 +90,25 @@ public class QuizActivity extends AppCompatActivity {
                     int points = QuizContext.getInstance().getPoints();
                     QuizContext.getInstance().setPoints(++points);
                     Toast.makeText(getBaseContext(), "Correct Answer", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getBaseContext(), "Points: " + QuizContext.getInstance().getPoints(), Toast.LENGTH_SHORT).show();
                     QuizContext.getInstance().setNumberOfQuestions(QuizContext.getInstance().getNumberOfQuestions() - 1);
                     if(QuizContext.getInstance().getNumberOfQuestions() > 0 ) {
+                        //Still Questions left, Reload this activity
                         finish();
                         startActivity(getIntent());
                     }else{
+                        //Al questions finished, Go to Result Activity
                         Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
                         startActivity(intent);
                     }
                 }else{
                     Toast.makeText(getBaseContext(), "Wrong Answer", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getBaseContext(), "Points: " + QuizContext.getInstance().getPoints(), Toast.LENGTH_SHORT).show();
                     QuizContext.getInstance().setNumberOfQuestions(QuizContext.getInstance().getNumberOfQuestions() - 1);
                     if(QuizContext.getInstance().getNumberOfQuestions() > 0 ) {
+                        //Still Questions left, Reload this activity
                         finish();
                         startActivity(getIntent());
                     }else{
+                        //Al questions finished, Go to Result Activity
                         Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
                         startActivity(intent);
                     }

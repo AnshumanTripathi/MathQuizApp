@@ -4,6 +4,8 @@ import java.util.Random;
 
 /**
  * Created by AnshumanTripathi on 9/26/16.
+ *
+ * Context Class used to maintain state of the quiz.
  */
 
 public class QuizContext {
@@ -15,23 +17,26 @@ public class QuizContext {
     private static QuizContext instance = null;
     private static int numberOfQuestions = 10;
 
-    String[] operations = {"add","sub","mul"};
+    private String[] operations = {"add", "sub", "mul"};
 
-    private QuizContext(){}
+    private QuizContext() {
+    }
 
-    static QuizContext getInstance(){
-        if(instance == null) {
+    static QuizContext getInstance() {
+        if (instance == null) {
             return new QuizContext();
         }
         return instance;
     }
 
-    int getAnswer(){
+    int getAnswer() {
         return answer;
     }
+
     void setAnswer(int answerUser) {
         answer = answerUser;
     }
+
     int getPoints() {
         return points;
     }
@@ -40,32 +45,32 @@ public class QuizContext {
         points = pointsUser;
     }
 
-    int getNumberOfQuestions(){
+    int getNumberOfQuestions() {
         return numberOfQuestions;
     }
 
-    void setNumberOfQuestions(int questions){
+    void setNumberOfQuestions(int questions) {
         numberOfQuestions = questions;
     }
 
-    String getOperation(){
+    String getOperation() {
         int index = new Random().nextInt(operations.length);
         return operations[index];
     }
 
-    public int getNum1() {
+    int getNum1() {
         return num1;
     }
 
-    public void setNum1(int randomNum1) {
+    void setNum1(int randomNum1) {
         num1 = randomNum1;
     }
 
-    public int getNum2() {
+    int getNum2() {
         return num2;
     }
 
-    public void setNum2(int randomNum2) {
+    void setNum2(int randomNum2) {
         num2 = randomNum2;
     }
 }

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MathQuizApp</string>
+    <string name="result">Result</string>
+    <string name="playAgain">Play Again!</string>
+    <string name="submit">Submit</string>
+    <string name="start">Start</string>
+    <string name="home">Math Quiz</string>
 </resources>

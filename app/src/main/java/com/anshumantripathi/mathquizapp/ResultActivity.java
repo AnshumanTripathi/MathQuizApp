@@ -14,17 +14,20 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        //View Elements
         TextView result = (TextView) findViewById(R.id.resultValue);
+        Button playAgainButton = (Button) findViewById(R.id.playAgain);
 
         result.setText(String.valueOf(QuizContext.getInstance().getPoints()));
-
-        Button playAgainButton = (Button) findViewById(R.id.playAgain);
 
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Reset Context
                 QuizContext.getInstance().setPoints(0);
                 QuizContext.getInstance().setNumberOfQuestions(3);
+                
+                //Start Quiz Again
                 Intent intent = new Intent(ResultActivity.this,QuizActivity.class);
                 startActivity(intent);
             }

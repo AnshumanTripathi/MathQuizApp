@@ -23,7 +23,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
-        android:text="Result: "
+        android:text="@string/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="102dp"
@@ -34,7 +34,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="Play Again!"
+        android:text="@string/playAgain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/resultValue"

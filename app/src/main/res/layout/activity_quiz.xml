@@ -29,7 +29,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="65dp"
-        android:id="@+id/answer" />
+        android:id="@+id/answer"/>
 
     <SeekBar
         style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -43,7 +43,7 @@
         android:id="@+id/seekBar" />
 
     <Button
-        android:text="Submit"
+        android:text="@string/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/seekBar"
