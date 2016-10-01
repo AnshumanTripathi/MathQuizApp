@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * Created by AnshumanTripathi on 9/26/16.
- *
+ * <p>
  * Context Class used to maintain state of the quiz.
  */
 
@@ -16,8 +16,9 @@ public class QuizContext {
     private static int num1;
     private static int num2;
     private static int points;
-    private static int numberOfQuestions = 10;
-    private String[] operations = {"add", "sub", "mul"};
+    private static int numberOfQuestions = 1;
+
+    private static String operation;
 
     private QuizContext() {
     }
@@ -54,9 +55,13 @@ public class QuizContext {
     }
 
     String getOperation() {
-        // Get Random Operation
-        int index = new Random().nextInt(operations.length);
-        return operations[index];
+        return this.operation;
+    }
+
+
+    public void setOperation(String operationUser) {
+        this.operation = operationUser;
+        System.out.print("Operation set: "+this.operation);
     }
 
     int getNum1() {
@@ -76,8 +81,8 @@ public class QuizContext {
     }
 
     //Reset QuizContext
-    void resetContext(){
+    void resetContext() {
         QuizContext.getInstance().setPoints(0);
-        QuizContext.getInstance().setNumberOfQuestions(10);
+        QuizContext.getInstance().setNumberOfQuestions(1);
     }
 }

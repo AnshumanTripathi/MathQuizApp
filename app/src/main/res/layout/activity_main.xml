@@ -10,24 +10,67 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.anshumantripathi.mathquizapp.LauncherActivity">
 
+    <Button
+        android:text="Exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/exit"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="19dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ripple_effect_exit"
+        android:textColor="@android:color/background_light" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/home"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:text="@string/home"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="137dp" />
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="@string/start"
+        android:text="Addition Quiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="130dp"
-        android:id="@+id/startButton"
+        android:id="@+id/add"
         android:elevation="0dp"
-        style="@android:style/Widget.Holo.Button" />
+        style="@android:style/Widget.Material.Button"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/ripple_effect"
+        android:textColor="@android:color/background_light"
+        android:layout_below="@+id/home"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Multiplication Quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mul"
+        android:elevation="0dp"
+        style="@android:style/Widget.Material.Button"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/ripple_effect"
+        android:textColor="@android:color/background_light"
+        android:layout_below="@+id/sub"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Subtraction Quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sub"
+        android:elevation="0dp"
+        style="@android:style/Widget.Material.Button"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ripple_effect"
+        android:textColor="@android:color/background_light"
+        android:layout_below="@+id/add"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

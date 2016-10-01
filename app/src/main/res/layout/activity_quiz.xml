@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_quiz"
     android:layout_width="match_parent"
@@ -10,55 +11,354 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.anshumantripathi.mathquizapp.QuizActivity">
 
-    <TextView
-        android:text="Question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="114dp"
-        android:layout_marginStart="114dp"
-        android:id="@+id/questions"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <SeekBar
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="10"
-        android:progress="3"
-        android:layout_below="@+id/answer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:id="@+id/seekBar" />
+        android:columnCount="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
 
-    <Button
-        android:text="@string/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/seekBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="82dp"
-        android:id="@+id/submit" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num1"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="1"
+                android:tag="1"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num2"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="2"
+                android:tag="2"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num3"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="3"
+                android:tag="3"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num4"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="4"
+                android:tag="4"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num5"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="5"
+                android:tag="5"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num6"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="6"
+                android:tag="6"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num7"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="7"
+                android:tag="7"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num8"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="8"
+                android:tag="8"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num9"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="9"
+                android:tag="9"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/clear"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="clear"
+                android:tag="clear"
+                android:textColor="@android:color/background_light" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/num0"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="0"
+                android:tag="0"
+                android:textColor="@android:color/background_light"
+                android:onClick="setValue"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+            <Button
+                android:id="@+id/enter"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="24dp"
+                android:text="ENTER"
+                android:tag="enter"
+                android:textColor="@android:color/background_light" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+        </LinearLayout>
+    </GridLayout>
 
     <TextView
         android:text="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:id="@+id/answer"
-        android:layout_below="@+id/questions"
-        android:layout_alignLeft="@+id/questions"
-        android:layout_alignStart="@+id/questions" />
+        android:layout_marginTop="18dp"
+        android:id="@+id/numText1"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="@string/yourAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/seekBar"
-        android:layout_alignParentLeft="true"
+        android:id="@+id/line"
+        android:layout_marginTop="14dp"
+        android:text="---------------"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_alignTop="@+id/numText2"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="+"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/numText2"
+        android:layout_toStartOf="@+id/numText2"
+        android:layout_marginEnd="14dp"
+        android:id="@+id/operation"
+        android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/answer"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_below="@+id/line"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/numText1"
         android:layout_alignParentStart="true"
-        android:id="@+id/textView4"
-        android:layout_alignTop="@+id/answer" />
+        android:id="@+id/qNumber"
+        android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numText2"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_below="@+id/numText1"
+        android:layout_alignStart="@+id/numText1"
+        android:layout_marginTop="13dp" />
+
+    <ImageButton
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeText"
+        android:text="Time Left: "
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/answer"
+        android:layout_toEndOf="@+id/qNumber" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/timeText"
+        android:layout_toEndOf="@+id/timeText"
+        android:id="@+id/timer" />
+
 </RelativeLayout>
