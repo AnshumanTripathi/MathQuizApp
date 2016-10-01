@@ -1,6 +1,7 @@
-# Requirements
-  - Home Screen
-    >    - This screen presents three options to the user to start a quiz for one of the operations, addition, subtraction, or production.
+## Requirements
+
+- Home Screen
+    >   -   This screen presents three options for addition, subtraction and division.
 
 - Quiz and Quiz Screen
     > - Each quiz consists of 10 questions of the operation type selected through the home screen
