@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -134,6 +136,8 @@ public class QuizActivity extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cdt.cancel();
+
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(QuizActivity.this);
                 alertDialogBuilder.setMessage("Exit Quiz?");
                 alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -148,11 +152,12 @@ public class QuizActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        cdt.start();
                     }
                 });
 
                 AlertDialog alertDialog = alertDialogBuilder.create();
+                lockDialogBackground(alertDialog);
                 alertDialog.show();
             }
         });
@@ -162,6 +167,7 @@ public class QuizActivity extends AppCompatActivity {
     //Generate a Dialog on back key pressed
     @Override
     public void onBackPressed() {
+        cdt.cancel();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(QuizActivity.this);
         alertDialogBuilder.setMessage("Exit Quiz?");
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -176,11 +182,12 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                cdt.start();
             }
         });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
+        lockDialogBackground(alertDialog);
         alertDialog.show();
     }
 
@@ -192,7 +199,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     //Go to next question
-    public void nextQuestion() {
+    private void nextQuestion() {
         cdt.cancel(); //Cancel current timer and move to next question
         QuizContext.getInstance().setNumberOfQuestions(QuizContext.getInstance().getNumberOfQuestions() + 1);
         if (QuizContext.getInstance().getNumberOfQuestions() <= 10) {
@@ -212,13 +219,14 @@ public class QuizActivity extends AppCompatActivity {
                 }
             });
             AlertDialog alertDialog = alertDialogBuilder.create();
+            lockDialogBackground(alertDialog);
             alertDialog.show();
         }
     }
 
 
     //Generate a Toast for half millisecond
-    public void generateSmallToast(String info) {
+    private void generateSmallToast(String info) {
         final Toast toast = Toast.makeText(getBaseContext(), info, Toast.LENGTH_SHORT);
         toast.show();
         new Handler().postDelayed(new Runnable() {
@@ -227,6 +235,14 @@ public class QuizActivity extends AppCompatActivity {
                 toast.cancel();
             }
         }, 500);
+    }
+
+    //Lock background screen on dialog
+    private void lockDialogBackground(AlertDialog alertDialog){
+        Window window = alertDialog.getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
     }
 
 }
