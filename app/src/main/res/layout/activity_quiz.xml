@@ -233,7 +233,7 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/ripple_effect"
                 android:elevation="24dp"
-                android:text="clear"
+                android:text="@string/clear"
                 android:tag="clear"
                 android:textColor="@android:color/background_light" />
 
@@ -250,8 +250,8 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/ripple_effect"
                 android:elevation="24dp"
-                android:text="0"
-                android:tag="0"
+                android:text="@string/defaultNum"
+                android:tag="@string/defaultNum"
                 android:textColor="@android:color/background_light"
                 android:onClick="setValue"/>
 
@@ -268,7 +268,7 @@
                 android:layout_marginTop="24dp"
                 android:background="@drawable/ripple_effect"
                 android:elevation="24dp"
-                android:text="ENTER"
+                android:text="@string/submit"
                 android:tag="enter"
                 android:textColor="@android:color/background_light" />
 
@@ -279,26 +279,6 @@
 
         </LinearLayout>
     </GridLayout>
-
-    <TextView
-        android:text="0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:id="@+id/numText1"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/line"
-        android:layout_marginTop="14dp"
-        android:text="---------------"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:layout_alignTop="@+id/numText2"
-        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="+"
@@ -327,38 +307,63 @@
         android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
     <TextView
-        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/timeText"
+        android:layout_toEndOf="@+id/timeText"
+        android:layout_marginLeft="10px"
+        android:id="@+id/timer" />
+
+    <TextView
+        android:text="@string/defaultNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/numText2"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/numText1"
-        android:layout_alignStart="@+id/numText1"
-        android:layout_marginTop="13dp" />
+        android:layout_centerHorizontal="true" />
 
-    <ImageButton
-        android:id="@+id/home"
+    <TextView
+        android:text="@string/defaultNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/numText1"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_marginTop="50dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toEndOf="@+id/operation" />
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:id="@+id/quizToolbar"
+        android:contentInsetLeft="0dp"
+        android:contentInsetRight="0dp"
+        android:layout_above="@+id/qNumber"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="13dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/line"
+        android:text="@string/line"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_below="@+id/operation"
+        android:layout_centerHorizontal="true"
+        app:popupTheme="@style/Theme.Design.NoActionBar"
+        android:theme="@style/AppTheme" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/timeText"
-        android:text="Time Left: "
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="19dp"
+        android:text="@string/timeLeft"
         android:layout_below="@+id/answer"
         android:layout_toEndOf="@+id/qNumber" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/timeText"
-        android:layout_toEndOf="@+id/timeText"
-        android:id="@+id/timer" />
 
 </RelativeLayout>
