@@ -27,30 +27,16 @@ public class LauncherActivity extends AppCompatActivity {
         final Button exitButton = (Button) findViewById(R.id.exit);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
-        myToolbar.setBackground(new ColorDrawable(Color.BLUE));
+        myToolbar.setBackground(new ColorDrawable(Color.LTGRAY));
         myToolbar.setContentInsetsAbsolute(0,0);
         myToolbar.setLogo(R.mipmap.ic_launcher);
         View logo = myToolbar.getChildAt(1);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(LauncherActivity.this,"Logo Clicked!",Toast.LENGTH_SHORT).show();
             }
         });
-//        ActionBar actionBar = getActionBar();
-//        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//        ImageView imageView = new ImageView(actionBar.getThemedContext());
-//        imageView.setScaleType(ImageView.ScaleType.CENTER);
-//        imageView.setImageResource(R.mipmap.ic_launcher);
-//        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
-//                ActionBar.LayoutParams.WRAP_CONTENT,
-//                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.RIGHT
-//                | Gravity.CENTER_VERTICAL);
-//        layoutParams.rightMargin = 40;
-//        imageView.setLayoutParams(layoutParams);
-//        actionBar.setCustomView(imageView);
-
 
 
         //Start Addition Quiz

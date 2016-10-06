@@ -41,18 +41,21 @@ public class QuizActivity extends AppCompatActivity {
         submitButton = (Button) findViewById(R.id.enter);
         clearButton = (Button) findViewById(R.id.clear);
 
+        /*
+        Setting up toolbar with back button
+         */
         Toolbar myToolbar = (Toolbar) findViewById(R.id.quizToolbar);
         setSupportActionBar(myToolbar);
-        myToolbar.setContentInsetsAbsolute(0,0);
-        myToolbar.setLogo(R.mipmap.ic_launcher);
-        myToolbar.setBackground(new ColorDrawable(Color.BLUE));
-        View logo = myToolbar.getChildAt(1);
+        myToolbar.setContentInsetsAbsolute(0, 0);
+        myToolbar.setBackground(new ColorDrawable(Color.LTGRAY));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 //        Ancestral Navigation by clicking home button.
 //        A Dialog is generated on clicking home button, confirming to exit
-        logo.setOnClickListener(new View.OnClickListener() {
+//        logo.setOnClickListener(new View.OnClickListener() {
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cdt.cancel();
@@ -146,7 +149,7 @@ public class QuizActivity extends AppCompatActivity {
                         nextQuestion();
                     }
                 }
-                if(!questionNumber.getText().equals("#10"))
+                if (!questionNumber.getText().equals("#10"))
                     questionNumber.setText("#" + QuizContext.getInstance().getNumberOfQuestions());
                 num1Text.setText(String.valueOf(QuizContext.getInstance().getNum1()));
                 num2Text.setText(String.valueOf(QuizContext.getInstance().getNum2()));
