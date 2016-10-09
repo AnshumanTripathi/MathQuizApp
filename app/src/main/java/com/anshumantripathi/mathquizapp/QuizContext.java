@@ -1,5 +1,6 @@
 package com.anshumantripathi.mathquizapp;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Random;
  * Context Class used to maintain state of the quiz.
  */
 
-public class QuizContext {
+public class QuizContext{
 
     private static QuizContext instance = null;
 
@@ -17,10 +18,14 @@ public class QuizContext {
     private static int num2;
     private static int points;
     private static int numberOfQuestions = 1;
-
+    private long millisLeft = 0;
     private static String operation;
 
     private QuizContext() {
+    }
+
+    public static void updateInstance(QuizContext updatedInstance){
+        instance = updatedInstance;
     }
 
     static QuizContext getInstance() {
@@ -60,7 +65,7 @@ public class QuizContext {
 
 
     public void setOperation(String operationUser) {
-        this.operation = operationUser;
+        operation = operationUser;
         System.out.print("Operation set: "+this.operation);
     }
 
@@ -84,5 +89,13 @@ public class QuizContext {
     void resetContext() {
         QuizContext.getInstance().setPoints(0);
         QuizContext.getInstance().setNumberOfQuestions(1);
+    }
+
+    public long getMillisLeft() {
+        return millisLeft;
+    }
+
+    public void setMillisLeft(long millisLeft) {
+        this.millisLeft = millisLeft;
     }
 }

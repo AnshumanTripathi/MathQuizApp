@@ -1,10 +1,15 @@
 package com.anshumantripathi.mathquizapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -21,6 +26,10 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(!isTablet(this)){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         final Button addButton = (Button) findViewById(R.id.add);
         final Button subButton = (Button) findViewById(R.id.sub);
         final Button mulButton = (Button) findViewById(R.id.mul);
@@ -30,13 +39,6 @@ public class LauncherActivity extends AppCompatActivity {
         myToolbar.setBackground(new ColorDrawable(Color.LTGRAY));
         myToolbar.setContentInsetsAbsolute(0,0);
         myToolbar.setLogo(R.mipmap.ic_launcher);
-        View logo = myToolbar.getChildAt(1);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LauncherActivity.this,"Logo Clicked!",Toast.LENGTH_SHORT).show();
-            }
-        });
 
 
         //Start Addition Quiz
@@ -105,4 +107,11 @@ public class LauncherActivity extends AppCompatActivity {
         }, 2000);
 
     }
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
 }
