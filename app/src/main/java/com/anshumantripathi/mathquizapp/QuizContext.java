@@ -9,7 +9,7 @@ import java.util.Random;
  * Context Class used to maintain state of the quiz.
  */
 
-public class QuizContext{
+public class QuizContext implements Serializable{
 
     private static QuizContext instance = null;
 
@@ -18,7 +18,7 @@ public class QuizContext{
     private static int num2;
     private static int points;
     private static int numberOfQuestions = 1;
-    private long millisLeft = 0;
+    private static long millisLeft = 0;
     private static String operation;
 
     private QuizContext() {

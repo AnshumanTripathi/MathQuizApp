@@ -12,6 +12,19 @@ public class RetainedFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState!=null)
+        {
+            data = (QuizContext) savedInstanceState.getSerializable("data");
+
+            if(data!=null)
+                System.err.println("RetainedFragment millisLeft " + data.getMillisLeft());
+            else
+                System.err.println("RetainedFragment millisLeft null");
+        }
+        else
+        {
+            System.err.println("RetainedFragment saveInstanceState null");
+        }
         setRetainInstance(true);
     }
 
@@ -21,5 +34,11 @@ public class RetainedFragment extends android.support.v4.app.Fragment {
 
     public QuizContext getData(){
         return data;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("data", data);
     }
 }

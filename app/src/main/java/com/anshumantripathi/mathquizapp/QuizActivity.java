@@ -14,6 +14,7 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,14 +39,13 @@ public class QuizActivity extends AppCompatActivity {
     TextView num2Text;
     TextView timer;
     TextView questionNumber;
-
     long millisLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        //Layout Elements
+
         questionNumber = (TextView) findViewById(R.id.qNumber);
         operationText = (TextView) findViewById(R.id.operation);
         num1Text = (TextView) findViewById(R.id.numText1);
@@ -83,71 +83,41 @@ public class QuizActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final String operation = extras.getString("operation");
 
-        if(!isTablet(this)){
+        if (!isTablet(this)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         FragmentManager fm = getSupportFragmentManager();
 
-        if(savedInstanceState!=null){
-            dataFragment =(RetainedFragment) fm.findFragmentByTag("data");
+        if (savedInstanceState != null) {
+
+            QuizContext quizData = (QuizContext) savedInstanceState.getSerializable("data");
+
+            if (quizData != null) {
+                System.err.println("quizdata " + quizData.getMillisLeft());
+            } else {
+                System.err.println("quizdata null");
+            }
+
+            dataFragment = (RetainedFragment) fm.findFragmentByTag("data");
             QuizContext instance = dataFragment.getData();
+
             QuizContext.getInstance().updateInstance(instance);
-            if(QuizContext.getInstance().getMillisLeft() != 0){
+            System.err.println("instance " + instance.getMillisLeft() + " quizContext " + QuizContext.getInstance().getMillisLeft());
+            if (QuizContext.getInstance().getMillisLeft() != 0) {
                 millisLeft = QuizContext.getInstance().getMillisLeft();
-                cdt = new CountDownTimer(millisLeft,500) {
+                cdt = new CountDownTimer(millisLeft, 500) {
                     @Override
                     public void onTick(long millisUntilFinished) {
-                        millisLeft = millisUntilFinished;
-                        int timeLeft = (int) millisUntilFinished / 1000;
-                        timer.setText(String.valueOf(String.valueOf(timeLeft)));
-                        switch (QuizContext.getInstance().getOperation()) {
-                            case "add":
-                                operationText.setText("+");
-                                break;
-                            case "sub":
-                                operationText.setText("-");
-                                break;
-                            case "mul":
-                                operationText.setText("x");
-                                break;
-                        }
-                        String answer = answerText.getText().toString();
-                        if (!answer.equals("")) {
-                            QuizContext.getInstance().setAnswer(Integer.parseInt(answer));
-                            int solution = 0;
-                            String operation = QuizContext.getInstance().getOperation();
-                            switch (operation) {
-                                case "add":
-                                    solution = QuizContext.getInstance().getNum1() + QuizContext.getInstance().getNum2();
-                                    break;
-                                case "mul":
-                                    solution = QuizContext.getInstance().getNum1() * QuizContext.getInstance().getNum2();
-                                    break;
-                                case "sub":
-                                    solution = QuizContext.getInstance().getNum1() - QuizContext.getInstance().getNum2();
-                                    break;
-                            }
-
-                            if (solution == QuizContext.getInstance().getAnswer()) {
-                                int points = QuizContext.getInstance().getPoints();
-                                QuizContext.getInstance().setPoints(++points);
-                                generateSmallToast("Correct!");
-                                nextQuestion();
-                            }
-                        }
-                        if (!questionNumber.getText().equals("#10"))
-                            questionNumber.setText("#" + QuizContext.getInstance().getNumberOfQuestions());
-                        num1Text.setText(String.valueOf(QuizContext.getInstance().getNum1()));
-                        num2Text.setText(String.valueOf(QuizContext.getInstance().getNum2()));
+                        setOnTick(millisUntilFinished);
                     }
 
                     @Override
                     public void onFinish() {
-                    nextQuestion();
+                        nextQuestion();
                     }
                 }.start();
             }
-        }else {
+        } else {
             dataFragment = new RetainedFragment();
             getSupportFragmentManager().beginTransaction().add(dataFragment, "data").commit();
             dataFragment.setData(QuizContext.getInstance());
@@ -173,48 +143,7 @@ public class QuizActivity extends AppCompatActivity {
             cdt = new CountDownTimer(6000, 500) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    millisLeft = millisUntilFinished;
-                    int timeLeft = (int) millisUntilFinished / 1000;
-                    timer.setText(String.valueOf(String.valueOf(timeLeft)));
-                    switch (QuizContext.getInstance().getOperation()) {
-                        case "add":
-                            operationText.setText("+");
-                            break;
-                        case "sub":
-                            operationText.setText("-");
-                            break;
-                        case "mul":
-                            operationText.setText("x");
-                            break;
-                    }
-                    String answer = answerText.getText().toString();
-                    if (!answer.equals("")) {
-                        QuizContext.getInstance().setAnswer(Integer.parseInt(answer));
-                        int solution = 0;
-                        String operation = QuizContext.getInstance().getOperation();
-                        switch (operation) {
-                            case "add":
-                                solution = QuizContext.getInstance().getNum1() + QuizContext.getInstance().getNum2();
-                                break;
-                            case "mul":
-                                solution = QuizContext.getInstance().getNum1() * QuizContext.getInstance().getNum2();
-                                break;
-                            case "sub":
-                                solution = QuizContext.getInstance().getNum1() - QuizContext.getInstance().getNum2();
-                                break;
-                        }
-
-                        if (solution == QuizContext.getInstance().getAnswer()) {
-                            int points = QuizContext.getInstance().getPoints();
-                            QuizContext.getInstance().setPoints(++points);
-                            generateSmallToast("Correct!");
-                            nextQuestion();
-                        }
-                    }
-                    if (!questionNumber.getText().equals("#10"))
-                        questionNumber.setText("#" + QuizContext.getInstance().getNumberOfQuestions());
-                    num1Text.setText(String.valueOf(QuizContext.getInstance().getNum1()));
-                    num2Text.setText(String.valueOf(QuizContext.getInstance().getNum2()));
+                    setOnTick(millisUntilFinished);
                 }
 
                 @Override
@@ -271,10 +200,10 @@ public class QuizActivity extends AppCompatActivity {
     //Generate a Dialog on back key pressed
     @Override
     public void onBackPressed() {
-       showExitQuizDialog();
+        showExitQuizDialog();
     }
 
-    public void showExitQuizDialog(){
+    public void showExitQuizDialog() {
         cdt.cancel();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(QuizActivity.this);
         alertDialogBuilder.setMessage("Exit Quiz?");
@@ -291,51 +220,10 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                cdt = new CountDownTimer(millisLeft,500) {
+                cdt = new CountDownTimer(millisLeft, 500) {
                     @Override
                     public void onTick(long millisUntilFinished) {
-                        millisLeft = millisUntilFinished;
-                        int timeLeft = (int) millisUntilFinished / 1000;
-                        timer.setText(String.valueOf(String.valueOf(timeLeft)));
-                        switch (QuizContext.getInstance().getOperation()) {
-                            case "add":
-                                operationText.setText("+");
-                                break;
-                            case "sub":
-                                operationText.setText("-");
-                                break;
-                            case "mul":
-                                operationText.setText("x");
-                                break;
-                        }
-                        String answer = answerText.getText().toString();
-                        if (!answer.equals("")) {
-                            QuizContext.getInstance().setAnswer(Integer.parseInt(answer));
-                            int solution = 0;
-                            String operation = QuizContext.getInstance().getOperation();
-                            switch (operation) {
-                                case "add":
-                                    solution = QuizContext.getInstance().getNum1() + QuizContext.getInstance().getNum2();
-                                    break;
-                                case "mul":
-                                    solution = QuizContext.getInstance().getNum1() * QuizContext.getInstance().getNum2();
-                                    break;
-                                case "sub":
-                                    solution = QuizContext.getInstance().getNum1() - QuizContext.getInstance().getNum2();
-                                    break;
-                            }
-
-                            if (solution == QuizContext.getInstance().getAnswer()) {
-                                int points = QuizContext.getInstance().getPoints();
-                                QuizContext.getInstance().setPoints(++points);
-                                generateSmallToast("Correct!");
-                                nextQuestion();
-                            }
-                        }
-                        if (!questionNumber.getText().equals("#10"))
-                            questionNumber.setText("#" + QuizContext.getInstance().getNumberOfQuestions());
-                        num1Text.setText(String.valueOf(QuizContext.getInstance().getNum1()));
-                        num2Text.setText(String.valueOf(QuizContext.getInstance().getNum2()));
+                        setOnTick(millisUntilFinished);
                     }
 
                     @Override
@@ -351,6 +239,52 @@ public class QuizActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void setOnTick(long millisUntilFinished) {
+        millisLeft = millisUntilFinished;
+        int timeLeft = (int) millisUntilFinished / 1000;
+        timer.setText(String.valueOf(String.valueOf(timeLeft)));
+        switch (QuizContext.getInstance().getOperation()) {
+            case "add":
+                operationText.setText("+");
+                break;
+            case "sub":
+                operationText.setText("-");
+                break;
+            case "mul":
+                operationText.setText("x");
+                break;
+        }
+        String answer = answerText.getText().toString();
+        if (!answer.equals("")) {
+            QuizContext.getInstance().setAnswer(Integer.parseInt(answer));
+            int solution = 0;
+            String operation = QuizContext.getInstance().getOperation();
+            switch (operation) {
+                case "add":
+                    solution = QuizContext.getInstance().getNum1() + QuizContext.getInstance().getNum2();
+                    break;
+                case "mul":
+                    solution = QuizContext.getInstance().getNum1() * QuizContext.getInstance().getNum2();
+                    break;
+                case "sub":
+                    solution = QuizContext.getInstance().getNum1() - QuizContext.getInstance().getNum2();
+                    break;
+            }
+
+            if (solution == QuizContext.getInstance().getAnswer()) {
+                int points = QuizContext.getInstance().getPoints();
+                QuizContext.getInstance().setPoints(++points);
+                generateSmallToast("Correct!");
+                nextQuestion();
+            }
+        }
+        if (!questionNumber.getText().equals("#10"))
+            questionNumber.setText("#" + QuizContext.getInstance().getNumberOfQuestions());
+        num1Text.setText(String.valueOf(QuizContext.getInstance().getNum1()));
+        num2Text.setText(String.valueOf(QuizContext.getInstance().getNum2()));
+
+    }
+
     //Set Answer Text
     public void setValue(View v) {
         String answer = answerText.getText().toString();
@@ -359,7 +293,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     //Go to next question
-    private void nextQuestion() {
+    public void nextQuestion() {
         cdt.cancel(); //Cancel current timer and move to next question
         QuizContext.getInstance().setNumberOfQuestions(QuizContext.getInstance().getNumberOfQuestions() + 1);
         if (QuizContext.getInstance().getNumberOfQuestions() <= 10) {
@@ -408,7 +342,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         cdt.cancel();
-        if(millisLeft!=0){
+        if (millisLeft != 0) {
             QuizContext.getInstance().setMillisLeft(millisLeft);
         }
         dataFragment.setData(QuizContext.getInstance());
@@ -417,59 +351,58 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-            cdt.cancel();
-            cdt = new CountDownTimer(millisLeft, 500) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    millisLeft = millisUntilFinished;
-                    int timeLeft = (int) millisUntilFinished / 1000;
-                    timer.setText(String.valueOf(String.valueOf(timeLeft)));
-                    switch (QuizContext.getInstance().getOperation()) {
+        cdt = new CountDownTimer(millisLeft, 500) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                millisLeft = millisUntilFinished;
+                int timeLeft = (int) millisUntilFinished / 1000;
+                timer.setText(String.valueOf(String.valueOf(timeLeft)));
+                switch (QuizContext.getInstance().getOperation()) {
+                    case "add":
+                        operationText.setText("+");
+                        break;
+                    case "sub":
+                        operationText.setText("-");
+                        break;
+                    case "mul":
+                        operationText.setText("x");
+                        break;
+                }
+                String answer = answerText.getText().toString();
+                if (!answer.equals("")) {
+                    QuizContext.getInstance().setAnswer(Integer.parseInt(answer));
+                    int solution = 0;
+                    String operation = QuizContext.getInstance().getOperation();
+                    switch (operation) {
                         case "add":
-                            operationText.setText("+");
-                            break;
-                        case "sub":
-                            operationText.setText("-");
+                            solution = QuizContext.getInstance().getNum1() + QuizContext.getInstance().getNum2();
                             break;
                         case "mul":
-                            operationText.setText("x");
+                            solution = QuizContext.getInstance().getNum1() * QuizContext.getInstance().getNum2();
+                            break;
+                        case "sub":
+                            solution = QuizContext.getInstance().getNum1() - QuizContext.getInstance().getNum2();
                             break;
                     }
-                    String answer = answerText.getText().toString();
-                    if (!answer.equals("")) {
-                        QuizContext.getInstance().setAnswer(Integer.parseInt(answer));
-                        int solution = 0;
-                        String operation = QuizContext.getInstance().getOperation();
-                        switch (operation) {
-                            case "add":
-                                solution = QuizContext.getInstance().getNum1() + QuizContext.getInstance().getNum2();
-                                break;
-                            case "mul":
-                                solution = QuizContext.getInstance().getNum1() * QuizContext.getInstance().getNum2();
-                                break;
-                            case "sub":
-                                solution = QuizContext.getInstance().getNum1() - QuizContext.getInstance().getNum2();
-                                break;
-                        }
 
-                        if (solution == QuizContext.getInstance().getAnswer()) {
-                            int points = QuizContext.getInstance().getPoints();
-                            QuizContext.getInstance().setPoints(++points);
-                            generateSmallToast("Correct!");
-                            nextQuestion();
-                        }
+                    if (solution == QuizContext.getInstance().getAnswer()) {
+                        int points = QuizContext.getInstance().getPoints();
+                        QuizContext.getInstance().setPoints(++points);
+                        generateSmallToast("Correct!");
+                        nextQuestion();
                     }
-                    if (!questionNumber.getText().equals("#10"))
-                        questionNumber.setText("#" + QuizContext.getInstance().getNumberOfQuestions());
-                    num1Text.setText(String.valueOf(QuizContext.getInstance().getNum1()));
-                    num2Text.setText(String.valueOf(QuizContext.getInstance().getNum2()));
                 }
+                if (!questionNumber.getText().equals("#10"))
+                    questionNumber.setText("#" + QuizContext.getInstance().getNumberOfQuestions());
+                num1Text.setText(String.valueOf(QuizContext.getInstance().getNum1()));
+                num2Text.setText(String.valueOf(QuizContext.getInstance().getNum2()));
+            }
 
-                @Override
-                public void onFinish() {
-                    nextQuestion();
-                }
-            }.start();
+            @Override
+            public void onFinish() {
+                nextQuestion();
+            }
+        }.start();
 
     }
 
@@ -477,6 +410,30 @@ public class QuizActivity extends AppCompatActivity {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("data", QuizContext.getInstance());
+        outState.putInt("testInt", 99);
+
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        QuizContext quizData = (QuizContext) savedInstanceState.getSerializable("data");
+
+        if (quizData != null) {
+            System.err.println("quizdata " + quizData.getMillisLeft());
+        } else {
+            System.err.println("quizdata null");
+        }
+
+        System.err.println("testInt " + savedInstanceState.getInt("testInt"));
     }
 
 }
