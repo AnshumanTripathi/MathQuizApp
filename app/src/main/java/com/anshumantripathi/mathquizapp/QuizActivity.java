@@ -30,6 +30,7 @@ import java.util.Random;
 public class QuizActivity extends AppCompatActivity {
 
     private RetainedFragment dataFragment;
+    int test;
     TextView operationText;
     TextView answerText;
     Button submitButton;
